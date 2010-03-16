@@ -1,0 +1,24 @@
+\usemodule[report]
+\enableregime[utf-8]
+
+\setupframedtexts[width=broad]
+
+\def\|{\Vert}
+\def\ALPHABET#1{{\cal #1}}
+\def\DEFINED{\colonequals}
+\abbreviation {BSC} {binary symmetric channel}
+
+\starttext
+
+\article[
+  title={Error exponents for compound BSC},
+  author={Aditya Mahajan},
+  date={February 17, 2010}]
+
+
+\component code
+
+\stoptext
+
+ sed -e '/\(Schunk\|Sinput\)/d; s/\\\(begin\|end\){Soutput}/~~~~/; s/^> /    /' bsc-code.tex | pandoc -w context > code.tex
+

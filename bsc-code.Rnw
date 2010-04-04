@@ -84,23 +84,25 @@ $$T_p = D(q \| p), \quad T_{1-p} = D(q \| 1-p).$$
 
 Suppose we want to communicate at rate $(R_p, R_{1-p})$, $R_p < C_p$
 and $R_{1-p} < C_{1-p}$, using the coding scheme of the paper.
+Let $q_m$ and $q_c$ be the estimation thresholds for the message and control
+mode. 
 The lower bound of Proposition 2 simplifies to
 
-$$E_p ≥ \frac{D(q \| p)   D(p \| 1-p)}
-            {D(q\|p) + D(p \| 1-p)} 
+$$E_p ≥ \frac{D(q_c \| p)   D(p \| 1-p)}
+            {D(q_c\|p) + D(p \| 1-p)} 
             (1-γ_p)                         $$
 and
 
-$$E_{1-p} ≥ \frac{D(q \| 1-p) D(p \| 1-p)}
-               {D(q\|1-p) + D(p \| 1-p)} 
+$$E_{1-p} ≥ \frac{D(q_c \| 1-p) D(p \| 1-p)}
+               {D(q_c\|1-p) + D(p \| 1-p)} 
                 (1-γ_{1-p})                 $$
 
 where $γ_p = R_p/C_p$ and $γ_{1-p} = R_{1-p}/C_{1-p}$. 
 
-Now, we want to choose $q$ such that $E_p = E_{1-p}$ which is equivalent to
-choosing $q$ such 
+Now, we want to choose $q_c$ such that $E_p = E_{1-p}$ which is equivalent to
+choosing $q_c$ such 
 
-$$φ(q,p) = \frac{ (1-γ_p) }{ (1-γ_{1-p}) } $$
+$$φ(q_c,p) = \frac{ (1-γ_p) }{ (1-γ_{1-p}) } $$
 
 where
 
@@ -115,10 +117,10 @@ compoundBsc.phi <- function(p,q)
 }
 @
 
-This means that $q=0.5$, which maximally distinguishes
+This means that $q_c=0.5$, which maximally distinguishes
 between $\BSC_p$ and $\BSC_{1-p}$ is optimal only when $γ_p =
 γ_{1-p}$. For other values of $γ_p$ and $γ_{1-p}$, we need to
-invert $φ(q,p)$ to determine the value of $q$. 
+invert $φ(q_c,p)$ to determine the value of $q_c$. 
 
 <<invert φ>>=
 compoundBsc.E <- function(p, γ_1, γ_2) {
@@ -144,7 +146,7 @@ compoundBsc.E <- function(p, γ_1, γ_2) {
 }
 @
 
-The code below gives the plot of $φ(q,0.1)$ for different values of $q$.
+The code below gives the plot of $φ(q_c,0.1)$ for different values of $q_c$.
 
 <<Figure 1>>=
 # The affect of varying threshold q
@@ -152,7 +154,7 @@ compoundBsc.plotPhi <- function (p=0.1)
 {
   eps = 10e-3
   q   = seq(p+eps, 1-p-eps, by=0.001)            
-  lab = parse(text=sprintf("varphi(italic(q), %.1f)", p))
+  lab = parse(text=sprintf("varphi(italic(q[c]), %.1f)", p))
 
   pdf ("threshold.pdf", width = 7.5, height = 4.5)  # Output file
   par (lty = "solid", lwd = 1, bty = "l")           # An "L" box
@@ -162,7 +164,7 @@ compoundBsc.plotPhi <- function (p=0.1)
        type = "l"    ,
        log  = "x"    ,
        xaxt = "n"    ,
-       ylab = expression(italic(q)) ,
+       ylab = expression(italic(q[c])) ,
        xlab = lab    )
 
   abline(v = 1,  lty = "1343")

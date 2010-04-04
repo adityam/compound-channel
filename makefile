@@ -1,4 +1,4 @@
-pdf : code.tex
+bsc-code.pdf : code.tex
 	texexec wrapper.tex --result=bsc-code
 
 bsc-code.tex: bsc-code.Rnw
